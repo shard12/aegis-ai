@@ -1,4 +1,4 @@
-const BASE = '';
+const BASE = import.meta.env.VITE_API_BASE || '';
 
 async function json(path, opts = {}) {
   const res = await fetch(`${BASE}${path}`, {
