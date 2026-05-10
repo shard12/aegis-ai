@@ -20,6 +20,7 @@ export async function generate(req, res, next) {
 
     const report = {
       title: 'Aegis Emergency Handoff Summary',
+      generated_at_ms: Date.now(),
       generated_at: new Date().toISOString(),
       disclaimer:
         'Informational only. Not a diagnosis. For licensed clinicians—verify with patient and records.',

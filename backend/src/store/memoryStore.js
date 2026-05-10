@@ -20,9 +20,11 @@ export function getContext(id = 'default') {
 }
 
 export function appendHistory(entry) {
+  const now = Date.now();
   history.unshift({
     ...entry,
     id: crypto.randomUUID(),
+    at_ms: now,
     at: new Date().toISOString(),
   });
   return history[0];

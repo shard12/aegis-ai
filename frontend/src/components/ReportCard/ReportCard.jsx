@@ -58,7 +58,11 @@ export function ReportCard({ report, onCopy, onDownloadPdf }) {
     doc.text(report.title || 'Aegis Emergency Report', margin + 64, 36);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
-    doc.text(`Generated: ${formatDateTime(report.generated_at, { includeSeconds: true })}`, margin + 64, 54);
+    doc.text(
+      `Generated: ${formatDateTime(report.generated_at_ms ?? report.generated_at, { includeSeconds: true })}`,
+      margin + 64,
+      54,
+    );
     doc.text(`Time zone: ${getTimeZoneLabel()}`, pageW - margin, 54, { align: 'right' });
 
     y = 98;
@@ -146,7 +150,9 @@ export function ReportCard({ report, onCopy, onDownloadPdf }) {
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4 dark:border-slate-800">
         <div>
           <h3 className="font-display text-lg font-semibold">{report.title}</h3>
-          <p className="text-xs text-slate-500">{formatDateTime(report.generated_at, { includeSeconds: true })}</p>
+          <p className="text-xs text-slate-500">
+            {formatDateTime(report.generated_at_ms ?? report.generated_at, { includeSeconds: true })}
+          </p>
         </div>
         <div className="flex gap-2">
           <button

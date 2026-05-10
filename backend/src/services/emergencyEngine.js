@@ -8,6 +8,7 @@ export function buildEmergencyPayload(triageResult, { mapsUrl, lat, lng, contact
     coordinates: lat != null && lng != null ? { lat, lng } : null,
     contacts_notified: contacts,
     first_aid: cards,
+    timestamp_ms: Date.now(),
     timestamp: new Date().toISOString(),
   };
 }

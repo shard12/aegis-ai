@@ -21,7 +21,9 @@ export function HistoryTimeline() {
     <ul className="space-y-3">
       {items.map((h) => (
         <li key={h.id} className="rounded-xl border border-slate-200 bg-white p-4 text-sm dark:border-slate-800 dark:bg-slate-900">
-          <span className="font-mono text-xs text-slate-500 dark:text-slate-400">{formatDateTime(h.at, { includeSeconds: true })}</span>
+          <span className="font-mono text-xs text-slate-500 dark:text-slate-400">
+            {formatDateTime(h.at_ms ?? h.at, { includeSeconds: true })}
+          </span>
           <span className="ml-2 rounded bg-slate-100 px-2 py-0.5 text-xs dark:bg-slate-800">{h.type}</span>
           <pre className="mt-2 max-h-40 overflow-auto text-xs">{JSON.stringify(h, null, 2)}</pre>
         </li>
