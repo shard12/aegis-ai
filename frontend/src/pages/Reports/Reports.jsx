@@ -7,6 +7,8 @@ import { useGeolocation } from '../../hooks/useGeolocation.js';
 import { useLang } from '../../context/LanguageContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { SkeletonList } from '../../components/ui/SkeletonList.jsx';
+import { GlassPanel } from '../../components/dashboard/GlassPanel.jsx';
+import { StateCard } from '../../components/ui/StateCard.jsx';
 
 export function Reports() {
   const { profile, settings } = useApp();
@@ -58,26 +60,41 @@ export function Reports() {
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8">
-      <Link to="/triage" className="text-sm text-aegis-teal underline">
-        ← Triage
-      </Link>
-      <h1 className="mt-4 font-display text-2xl font-bold">{t.report_title}</h1>
-      {!triage && <p className="mt-2 text-sm text-amber-700">{t.report_requires_triage}</p>}
-      <button
-        type="button"
-        disabled={loading || !triage}
-        onClick={gen}
-        className="mt-4 rounded-xl bg-aegis-teal px-4 py-2 font-semibold text-white disabled:opacity-50"
-      >
-        {loading ? t.generating : t.generate_handoff}
-      </button>
+    <main className="app-page max-w-6xl">
+      <GlassPanel title={t.report_title}>
+        <Link to="/triage" className="text-sm text-cyan-700 underline dark:text-cyan-300">
+          ← Triage
+        </Link>
+        {!triage && <p className="mt-2 text-sm text-amber-700 dark:text-amber-300">{t.report_requires_triage}</p>}
+        <button
+          type="button"
+          disabled={loading || !triage}
+          onClick={gen}
+          className="ripple-btn mt-4 rounded-xl bg-gradient-to-r from-cyan-500 to-teal-500 px-4 py-2 font-semibold text-slate-950 disabled:opacity-50"
+        >
+          {loading ? t.generating : t.generate_handoff}
+        </button>
+      </GlassPanel>
       {error ? (
         <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-200">
           {error}
         </div>
       ) : null}
       {loading ? <div className="mt-6"><SkeletonList rows={2} /></div> : null}
+      {!loading && !report && !triage ? (
+        <div className="mt-6">
+          <StateCard
+            tone="warning"
+            title={t.report_requires_triage}
+            message={t.report_empty_hint || 'Start triage first, then come back to generate a clinician-ready report.'}
+            action={
+              <Link to="/triage" className="app-btn-secondary">
+                {t.triage}
+              </Link>
+            }
+          />
+        </div>
+      ) : null}
       {report && <ReportCard report={report} onCopy={copy} onDownloadPdf={pdf} />}
     </main>
   );

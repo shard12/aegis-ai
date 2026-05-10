@@ -4,6 +4,7 @@ import { LanguageProvider } from './context/LanguageContext.jsx';
 import { ToastProvider } from './context/ToastContext.jsx';
 import { Header } from './components/Header/Header.jsx';
 import { DisclaimerBanner } from './components/DisclaimerBanner/DisclaimerBanner.jsx';
+import { Footer } from './components/Footer/Footer.jsx';
 import { AppRoutes } from './routes.jsx';
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
             <DisclaimerBanner />
             <Header />
             <AppRoutes />
+            <Footer />
           </BrowserRouter>
         </ToastProvider>
       </LanguageProvider>

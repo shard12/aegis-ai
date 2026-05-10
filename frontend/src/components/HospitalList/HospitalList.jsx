@@ -42,7 +42,7 @@ export function HospitalList({ hospitals, loading, error, onRetry }) {
               </span>
             )}
           </div>
-          <div className="text-xs text-slate-500">
+          <div className="text-xs text-slate-600 dark:text-slate-400">
             <div>
               {(h.category || t.medical).toString()}
               {h.phone ? ` · ${h.phone}` : ''}

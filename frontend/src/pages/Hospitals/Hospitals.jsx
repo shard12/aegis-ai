@@ -5,6 +5,7 @@ import { loadHospitals } from '../../services/hospitalFinder.js';
 import { getCurrentPosition } from '../../services/geolocation.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useLang } from '../../context/LanguageContext.jsx';
+import { GlassPanel } from '../../components/dashboard/GlassPanel.jsx';
 
 const FALLBACK_COORDS = { lat: 12.9716, lng: 77.5946 }; // Bengaluru center
 
@@ -47,12 +48,12 @@ export function Hospitals() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <main className="mx-auto max-w-xl px-4 py-8">
-      <Link to="/" className="text-sm text-aegis-teal underline">
-        {t.home}
-      </Link>
-      <h1 className="mt-4 font-display text-2xl font-bold">{t.nearby_facilities}</h1>
-      <p className="text-sm text-slate-500">{t.hospitals_realtime_caption}</p>
+    <main className="app-page max-w-6xl">
+      <GlassPanel title={t.nearby_facilities} subtitle={t.hospitals_realtime_caption} className="mb-6">
+        <Link to="/" className="text-sm text-cyan-700 underline dark:text-cyan-300">
+          {t.home}
+        </Link>
+      </GlassPanel>
       <div className="mt-6">
         <HospitalList hospitals={hospitals} loading={loading} error={error} onRetry={fetchHospitals} />
       </div>

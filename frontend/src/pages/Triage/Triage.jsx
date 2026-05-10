@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Mic } from 'lucide-react';
 import { SymptomInput } from '../../components/SymptomInput/SymptomInput.jsx';
 import { FollowUpQuestions } from '../../components/FollowUpQuestions/FollowUpQuestions.jsx';
 import { RiskMeter } from '../../components/RiskMeter/RiskMeter.jsx';
@@ -10,6 +11,7 @@ import { analyzeTriage, triggerEmergency } from '../../services/api.js';
 import { hasOfflineRedFlag } from '../../utils/triageRules.js';
 import { useVoice } from '../../hooks/useVoice.js';
 import { buildFirstAidCards } from '../../utils/clientFirstAid.js';
+import { GlassPanel } from '../../components/dashboard/GlassPanel.jsx';
 
 function StepPill({ active, done, children }) {
   const base = 'rounded-full px-3 py-1 text-xs font-semibold';
@@ -84,7 +86,7 @@ export function Triage() {
           }}
           className="grid h-11 w-11 place-items-center rounded-2xl border border-slate-200 bg-white text-slate-800 shadow-sm transition hover:bg-slate-50 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:hover:bg-slate-900"
         >
-          <span aria-hidden="true">🎙️</span>
+          <Mic className="h-5 w-5" aria-hidden="true" />
         </button>
         {listening ? (
           <button type="button" onClick={stop} className="text-xs font-semibold text-slate-600 underline dark:text-slate-300">
@@ -149,9 +151,9 @@ export function Triage() {
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8">
+    <main className="app-page max-w-6xl">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3 text-sm">
-        <Link className="text-aegis-teal underline" to="/">
+        <Link className="text-cyan-700 underline dark:text-cyan-300" to="/">
           {t.home}
         </Link>
         <div className="flex flex-wrap items-center gap-2">
@@ -175,7 +177,7 @@ export function Triage() {
 
       {step === 0 && (
         <div className="space-y-5">
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <GlassPanel>
             <h1 className="font-display text-2xl font-bold text-slate-900 dark:text-white">
               {bystander ? t.triage_helper_title : t.triage_title}
             </h1>
@@ -194,7 +196,7 @@ export function Triage() {
                   type="button"
                   disabled={!message.trim() || loading}
                   onClick={() => runAnalyze('')}
-                  className="min-h-[48px] rounded-2xl bg-aegis-teal px-6 font-semibold text-white shadow-sm hover:bg-aegis-tealDark disabled:opacity-50"
+                  className="ripple-btn min-h-[48px] rounded-2xl bg-gradient-to-r from-cyan-500 to-teal-500 px-6 font-semibold text-slate-950 shadow-sm disabled:opacity-50"
                 >
                   {loading ? t.analyzing : t.continue}
                 </button>
@@ -205,7 +207,7 @@ export function Triage() {
                 </div>
               ) : null}
             </div>
-          </div>
+          </GlassPanel>
         </div>
       )}
 
@@ -222,7 +224,7 @@ export function Triage() {
       {step >= 2 && result && (
         <div className="space-y-8">
           <RiskMeter level={result.risk_level} confidence={result.confidence} why={result.why_risk} />
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+          <GlassPanel>
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">{t.summary}</p>
               <p className="text-xs text-slate-500">
@@ -232,7 +234,7 @@ export function Triage() {
             <p className="mt-2 text-sm font-semibold text-slate-900 dark:text-white">{result.medical_summary}</p>
             <p className="text-sm text-slate-600 dark:text-slate-400">{result.suggested_response}</p>
             <p className="mt-3 text-sm font-medium text-aegis-tealDark">{result.recommended_action}</p>
-          </div>
+          </GlassPanel>
           <FirstAidCards firstAid={firstAid} />
 
           <div className="flex flex-col gap-3 sm:flex-row">

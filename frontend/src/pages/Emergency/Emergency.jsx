@@ -6,6 +6,7 @@ import { useApp } from '../../context/AppContext.jsx';
 import { triggerEmergency } from '../../services/api.js';
 import { formatMapsLink } from '../../utils/formatters.js';
 import { useLang } from '../../context/LanguageContext.jsx';
+import { GlassPanel } from '../../components/dashboard/GlassPanel.jsx';
 
 export function Emergency() {
   const { t } = useLang();
@@ -73,10 +74,12 @@ export function Emergency() {
   }
 
   return (
-    <main className="mx-auto max-w-lg px-4 py-8">
-      <Link to="/triage" className="text-sm text-aegis-teal underline">
-        ← {t.back_to_triage}
-      </Link>
+    <main className="app-page max-w-5xl">
+      <GlassPanel title={t.sos_center} subtitle={t.sos_subtitle}>
+        <Link to="/triage" className="text-sm text-cyan-700 underline dark:text-cyan-300">
+          ← {t.back_to_triage}
+        </Link>
+      </GlassPanel>
       <div className="mt-6">
         <SOSCenter
           loading={loading}
